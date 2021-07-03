@@ -72,7 +72,7 @@ func InitAppDB(dbPath string, appName string, schemaVersion uint8, schema []stri
 		}
 		initSchema(db, appName, schemaVersion, schema)
 	} else {
-		db, err = OpenAppDB(dbPath, appName, schemaVersion)
+		db, err = Open(dbPath, appName, schemaVersion)
 		if err != nil {
 			return nil, err
 		}
@@ -99,11 +99,11 @@ func openAppDBNoValidate(dbPath string) (*sql.DB, error) {
 	return db, nil
 }
 
-// OpenAppDB opens and validates the database
+// Open opens and validates the database
 // dbPath -- the filesystem location of the database file
 // appName -- name of application (arbitrary string, used to validate database)
 // schemaVersion -- version of schema in use (8-bit integer, used to validate database)
-func OpenAppDB(dbPath string, appName string, schemaVersion uint8) (*sql.DB, error) {
+func Open(dbPath string, appName string, schemaVersion uint8) (*sql.DB, error) {
 	db, err := openAppDBNoValidate(dbPath)
 	if err != nil {
 		return nil, err
